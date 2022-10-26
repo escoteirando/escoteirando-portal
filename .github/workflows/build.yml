@@ -26,6 +26,10 @@ jobs:
             ${{ runner.os }}-node-
       - name: Install
         run: yarn install
+      - name: Setup eslint
+        run: |
+          yarn install eslint -g -D
+          eslint --int
       - name: Build
         run: yarn run build
       - name: Deploy
