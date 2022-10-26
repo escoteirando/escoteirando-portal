@@ -1,4 +1,4 @@
-name: Build & Deploy
+name: Build and Deploy
 on:
   push:
     branches:
@@ -28,7 +28,7 @@ jobs:
         run: yarn install
       - name: Setup eslint
         run: |
-          yarn install eslint -g -D
+          yarn global install eslint --dev
           eslint --int
       - name: Build
         run: yarn run build
