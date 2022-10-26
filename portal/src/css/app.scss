@@ -1,0 +1,9 @@
+// app global css in SCSS form
+@import url('http://fonts.cdnfonts.com/css/courgette');
+
+.label-text {
+  font-family: 'Courgette', cursive;
+  font-size: 1.5em;
+  color: rgb(110, 1, 143);
+  text-shadow: 0 0 5px #000;
+}
