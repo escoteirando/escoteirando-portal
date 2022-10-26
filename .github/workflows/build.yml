@@ -10,7 +10,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       - name: Move portal folder to root
-        run: mv ./portal/* .
+        run: |
+          mv ./portal/* .
+          ls -la
       - name: Setup Node
         uses: actions/setup-node@v1
         with:
