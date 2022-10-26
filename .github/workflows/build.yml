@@ -25,13 +25,16 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-
       - name: Install
-        run: yarn install
-      - name: Setup eslint
         run: |
-          yarn global add eslint --dev
+          npm install
+          npm install -g @vue/cli
+          npm install -g @quasar/cli
+          npm install -g -D eslint
+      - name: Setup eslint
+        run: |          
           eslint --init
       - name: Build
-        run: yarn run build
+        run: quasar build
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
         env:
