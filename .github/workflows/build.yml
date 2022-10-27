@@ -25,7 +25,9 @@ jobs:
           npm install
           npm install -g @vue/cli @quasar/cli
       - name: Build
-        run: quasar build
+        run: |
+          export PUBLIC_PATH=/escoteirando-portal
+          quasar build
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
         with:
