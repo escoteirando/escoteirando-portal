@@ -8,11 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
-      - name: Move portal folder to root
-        run: |
-          mv ./portal/* .
-          ls -la
+        uses: actions/checkout@v3      
       - name: Setup Node
         uses: actions/setup-node@v1
         with:
@@ -27,12 +23,7 @@ jobs:
       - name: Install
         run: |
           npm install
-          npm install -g @vue/cli
-          npm install -g @quasar/cli
-          npm install -g -D eslint
-      - name: Setup eslint
-        run: |          
-          eslint --init
+          npm install -g @vue/cli @quasar/cli          
       - name: Build
         run: quasar build
       - name: Deploy
