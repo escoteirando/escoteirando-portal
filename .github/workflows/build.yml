@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3      
+        uses: actions/checkout@v3
       - name: Setup Node
         uses: actions/setup-node@v1
         with:
@@ -23,13 +23,10 @@ jobs:
       - name: Install
         run: |
           npm install
-          npm install -g @vue/cli @quasar/cli          
+          npm install -g @vue/cli @quasar/cli
       - name: Build
         run: quasar build
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          BASE_BRANCH: master
-          BRANCH: gh-pages
-          FOLDER: dist/spa
+        with:
+          folder: dist/spa
