@@ -43,11 +43,13 @@
 </template>
 
 <script>
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref, onBeforeMount } from "vue";
 import EssentialLink from "components/EssentialLink.vue";
 import ProxyInfo from "components/ProxyInfo.vue";
 import DadosEscotista from "components/DadosEscotista.vue";
 import DadosSecao from "components/DadosSecao.vue";
+import { useAuthStore } from "src/stores/auth-store";
+import router from "src/router";
 
 const linksList = [
   {
@@ -95,8 +97,17 @@ export default defineComponent({
 
   setup() {
     const leftDrawerOpen = ref(false);
+    const authStore = useAuthStore();
+    const beforeMount = onBeforeMount(() => {
+      if (!authStore.isAuthenticated) {
+        console.log("not authenticated", router);
+        router().push({ name: "login" });
+      }
+    });
 
     return {
+      authStore,
+      beforeMount,
       essentialLinks: linksList,
       leftDrawerOpen,
       toggleLeftDrawer() {

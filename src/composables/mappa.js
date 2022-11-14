@@ -27,7 +27,39 @@ export function useMappa () {
     });
   }
 
+  /**
+   * Login response
+   * {
+  "created": "string",
+  "id": "string",
+  "ttl": 0,
+  "userId": 0
+}
+  */
+  function login (username, password) {
+    return new Promise(async (resolve, reject) => {
+      fetch(`${mappaUrl}/login`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          username: username,
+          password: password
+        })
+      })
+        .then((response) => response.json())
+        .then(
+          (data) => {
+            resolve(data)
+          }
+        )
+        .catch(() => (reject("ERROR")));
+    })
+  }
+
   return {
-    getHC
+    getHC,
+    login
   }
 }

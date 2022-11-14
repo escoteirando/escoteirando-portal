@@ -32,6 +32,7 @@ export default {
       password: ''
     }
   }
+  //TODO: Implementar submit do login
 }
 </script>
 
