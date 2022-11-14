@@ -38,7 +38,7 @@ export function useMappa () {
   */
   function login (username, password) {
     return new Promise(async (resolve, reject) => {
-      fetch(`${mappaUrl}/login`, {
+      fetch(`${mappaUrl}/mappa/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

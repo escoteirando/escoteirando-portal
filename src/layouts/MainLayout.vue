@@ -17,7 +17,7 @@
       </q-toolbar>
     </q-header>
 
-    <q-drawer v-model="leftDrawerOpen" show-if-above bordered
+    <q-drawer v-model="drawerOpen" bordered
       ><dados-escotista
         nome="Guionardo Furlan"
         grupo="Leões de Blumenau 32/SC"
@@ -37,19 +37,30 @@
     </q-drawer>
 
     <q-page-container>
-      <router-view />
+      <router-view v-if="isAuthenticated" />
+      <q-page
+        v-else
+        class="bg-blue-gray-3 window-height window-width row justify-center items-center"
+      >
+        <div class="column">
+          <div class="row">
+            <login-form />
+          </div>
+        </div>
+      </q-page>
     </q-page-container>
   </q-layout>
 </template>
 
 <script>
-import { defineComponent, ref, onBeforeMount } from "vue";
+import { defineComponent, ref, computed } from "vue";
 import EssentialLink from "components/EssentialLink.vue";
 import ProxyInfo from "components/ProxyInfo.vue";
 import DadosEscotista from "components/DadosEscotista.vue";
 import DadosSecao from "components/DadosSecao.vue";
 import { useAuthStore } from "src/stores/auth-store";
-import router from "src/router";
+
+import LoginForm from "src/components/LoginForm.vue";
 
 const linksList = [
   {
@@ -93,25 +104,33 @@ export default defineComponent({
     ProxyInfo,
     DadosEscotista,
     DadosSecao,
+    LoginForm,
   },
 
   setup() {
     const leftDrawerOpen = ref(false);
     const authStore = useAuthStore();
-    const beforeMount = onBeforeMount(() => {
-      if (!authStore.isAuthenticated) {
-        console.log("not authenticated", router);
-        router().push({ name: "login" });
-      }
+    const drawerOpen = computed({
+      get: () => leftDrawerOpen.value,
+      set: (value) => {
+        if (value && !authStore.isAuthenticated) {
+          console.log("cannot open drawer, not authenticated");
+          value = false;
+        } else {
+          console.log("drawer open", value);
+        }
+        leftDrawerOpen.value = value;
+      },
     });
+    const isAuthenticated = computed(() => authStore.isAuthenticated);
 
     return {
       authStore,
-      beforeMount,
+      isAuthenticated,
       essentialLinks: linksList,
-      leftDrawerOpen,
+      drawerOpen,
       toggleLeftDrawer() {
-        leftDrawerOpen.value = !leftDrawerOpen.value;
+        drawerOpen.value = !drawerOpen.value;
       },
     };
   },
